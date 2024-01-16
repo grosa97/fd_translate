@@ -4,8 +4,8 @@
 import sys
 import itertools
 
-from . import pddl
-from . import timers
+import pddl
+import timers
 from functools import reduce
 
 def convert_rules(prog):
@@ -88,8 +88,7 @@ class JoinRule(BuildRule):
         eff_vars = {v for v in eff_args
                     if isinstance(v, int) or v[0] == "?"}
         assert left_vars & right_vars, self
-        assert (left_vars | right_vars) == (
-                left_vars & right_vars) | eff_vars, self
+        assert (left_vars | right_vars) == (left_vars & right_vars) | eff_vars, self
     def update_index(self, new_atom, cond_index):
         ordered_common_args = [
             new_atom.args[position]

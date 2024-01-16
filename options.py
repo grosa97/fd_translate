@@ -1,11 +1,13 @@
-# -*- coding: utf-8 -*-
-
 import argparse
 import sys
 
 
 def parse_args():
     argparser = argparse.ArgumentParser()
+    argparser.add_argument(
+        "domain", help="path to domain pddl file")
+    argparser.add_argument(
+        "task", help="path to task pddl file")
     argparser.add_argument(
         "--relaxed", dest="generate_relaxed_task", action="store_true",
         help="output relaxed task (no delete effects)")
@@ -24,7 +26,10 @@ def parse_args():
         "needed for grounded input files that would otherwise produce "
         "too many candidates.")
     argparser.add_argument(
-        "--invariant-generation-max-time", default=0, type=int,
+        "--sas-file", default="output.sas",
+        help="path to the SAS output file (default: %(default)s)")
+    argparser.add_argument(
+        "--invariant-generation-max-time", default=300, type=int,
         help="max time for invariant generation (default: %(default)ds)")
     argparser.add_argument(
         "--add-implied-preconditions", action="store_true",
@@ -47,7 +52,12 @@ def parse_args():
     argparser.add_argument(
         "--dump-task", action="store_true",
         help="dump human-readable SAS+ representation of the task")
-    return argparser.parse_known_args()
+    argparser.add_argument(
+        "--layer-strategy", default="min", choices=["min", "max"],
+        help="How to assign layers to derived variables. 'min' attempts to put as "
+        "many variables into the same layer as possible, while 'max' puts each variable "
+        "into its own layer unless it is part of a cycle.")
+    return argparser.parse_args()
 
 
 def copy_args_to_module(args):
@@ -57,7 +67,7 @@ def copy_args_to_module(args):
 
 
 def setup():
-    args, unknown = parse_args()
+    args = parse_args()
     copy_args_to_module(args)
 
 
