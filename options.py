@@ -57,12 +57,12 @@ def parse_args():
         help="How to assign layers to derived variables. 'min' attempts to put as "
         "many variables into the same layer as possible, while 'max' puts each variable "
         "into its own layer unless it is part of a cycle.")
-    return argparser.parse_args()
+    return argparser.parse_known_args()
 
 
 def copy_args_to_module(args):
     module_dict = sys.modules[__name__].__dict__
-    for key, value in vars(args).items():
+    for key, value in vars(args[0]).items():
         module_dict[key] = value
 
 

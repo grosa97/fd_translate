@@ -6,10 +6,10 @@ import itertools
 import time
 from typing import List
 
-import invariants
-import options
-import pddl
-import timers
+from . import invariants
+from . import options
+from . import pddl
+from . import timers
 
 class BalanceChecker:
     def __init__(self, task, reachable_action_params):

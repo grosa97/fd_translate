@@ -1,10 +1,14 @@
+from __future__ import print_function
+
+# -*- coding: utf-8 -*-
+
 import contextlib
 import os
 import sys
 import time
 
 
-class Timer:
+class Timer(object):
     def __init__(self):
         self.start_time = time.time()
         self.start_clock = self._clock()
@@ -17,6 +21,9 @@ class Timer:
         return "[%.3fs CPU, %.3fs wall-clock]" % (
             self._clock() - self.start_clock,
             time.time() - self.start_time)
+
+    def report( self ) :
+        return  self._clock() - self.start_clock
 
 
 @contextlib.contextmanager
