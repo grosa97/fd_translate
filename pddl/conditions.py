@@ -251,7 +251,9 @@ class Literal(Condition):
     def text(self):
         if len(self.args) == 0:
             return "%s" % self.predicate
-        return "%s_%s" % (self.predicate, "_".join(map(str, self.args)))
+        # return "%s_%s" % (self.predicate, "_".join(map(str, self.args)))
+        #changed to avoid ambiguity
+        return "%s~%s" % (self.predicate, ":".join(map(str, self.args)))
     def __repr__(self):
         return '<%s>' % self
     def _dump(self):
